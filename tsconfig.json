@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "lib": ["ES2017"],
+    "jsx": "react-native",
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "*.ts",
+    "*.tsx"
+, "dialog/FXDialog.d.ts", "dialog/FXDialog.ts", "dialog/FXDialogManager.d.ts", "dialog/FXDialogManager.ts", "dialog/FXDialogView.d.ts", "dialog/FXDialogView.tsx", "dialog/FXDialogViewController.d.ts", "dialog/FXDialogViewController.ts", "tool/FXDialogViewScrollCalculation.d.ts", "tool/FXDialogViewScrollCalculation.ts", "tool/FXDialogViewUpdateBuilder.d.ts", "tool/FXDialogViewUpdateBuilder.ts", "dialog/index.d.ts", "dialog/index.ts", "dialog/style.d.ts", "dialog/style.ts", "dialog/types.d.ts", "dialog/types.ts"  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}
