@@ -28,11 +28,40 @@ exports.AlertStyleInterceptor = {
         };
         if (actions.length > 2) {
             // 纵向布局：超过2个按钮，这里的顺序注意动不了，样式优先级低于props本身的样式
-            return Object.assign(Object.assign({}, props), { actionsContainerStyle: Object.assign(Object.assign(Object.assign({}, actionsContainerStyle), { flexDirection: "column" }), props.actionsContainerStyle), actions: actions.map((action, index) => (Object.assign(Object.assign({}, action), { containerStyle: Object.assign({ borderBottomWidth: index < actions.length - 1 ? react_native_1.StyleSheet.hairlineWidth : 0, borderBottomColor: index < actions.length - 1 ? "#E5E5E5" : undefined }, action.containerStyle) }))) });
+            return {
+                ...props,
+                actionsContainerStyle: {
+                    ...actionsContainerStyle,
+                    flexDirection: "column",
+                    ...props.actionsContainerStyle,
+                },
+                actions: actions.map((action, index) => ({
+                    ...action,
+                    containerStyle: {
+                        borderBottomWidth: index < actions.length - 1 ? react_native_1.StyleSheet.hairlineWidth : 0,
+                        borderBottomColor: index < actions.length - 1 ? "#E5E5E5" : undefined,
+                        ...action.containerStyle,
+                    },
+                })),
+            };
         }
         else {
             // 横向布局：1-2个按钮，添加右边框
-            return Object.assign(Object.assign({}, props), { actionsContainerStyle: Object.assign(Object.assign({}, actionsContainerStyle), props.actionsContainerStyle), actions: actions.map((action, index) => (Object.assign(Object.assign({}, action), { containerStyle: Object.assign({ borderRightWidth: index < actions.length - 1 ? react_native_1.StyleSheet.hairlineWidth : 0, borderRightColor: index < actions.length - 1 ? "#E5E5E5" : undefined }, action.containerStyle) }))) });
+            return {
+                ...props,
+                actionsContainerStyle: {
+                    ...actionsContainerStyle,
+                    ...props.actionsContainerStyle,
+                },
+                actions: actions.map((action, index) => ({
+                    ...action,
+                    containerStyle: {
+                        borderRightWidth: index < actions.length - 1 ? react_native_1.StyleSheet.hairlineWidth : 0,
+                        borderRightColor: index < actions.length - 1 ? "#E5E5E5" : undefined,
+                        ...action.containerStyle,
+                    },
+                })),
+            };
         }
     },
 };
@@ -49,7 +78,22 @@ exports.ActionSheetStyleInterceptor = {
             borderTopWidth: react_native_1.StyleSheet.hairlineWidth,
             borderTopColor: "#E5E5E5",
         };
-        return Object.assign(Object.assign({}, props), { actionsContainerStyle: Object.assign(Object.assign({}, actionsContainerStyle), props.actionsContainerStyle), actions: actions.map((action, index) => (Object.assign(Object.assign({}, action), { containerStyle: Object.assign({ marginTop: action.type === types_1.FXDialogActionType.Cancel ? 8 : 0, borderBottomWidth: index < actions.length - 1 ? react_native_1.StyleSheet.hairlineWidth : undefined, borderBottomColor: index < actions.length - 1 ? "#E5E5E5" : undefined }, action.containerStyle) }))) });
+        return {
+            ...props,
+            actionsContainerStyle: {
+                ...actionsContainerStyle,
+                ...props.actionsContainerStyle,
+            },
+            actions: actions.map((action, index) => ({
+                ...action,
+                containerStyle: {
+                    marginTop: action.type === types_1.FXDialogActionType.Cancel ? 8 : 0,
+                    borderBottomWidth: index < actions.length - 1 ? react_native_1.StyleSheet.hairlineWidth : undefined,
+                    borderBottomColor: index < actions.length - 1 ? "#E5E5E5" : undefined,
+                    ...action.containerStyle,
+                },
+            })),
+        };
     },
 };
 /**
@@ -63,7 +107,13 @@ exports.PopupStyleInterceptor = {
             return props;
         if (actions.length > 2) {
             // 纵向布局：超过2个按钮，这里的顺序注意动不了，样式优先级低于props本身的样式
-            return Object.assign(Object.assign({}, props), { actionsContainerStyle: Object.assign({ flexDirection: "column" }, props.actionsContainerStyle) });
+            return {
+                ...props,
+                actionsContainerStyle: {
+                    flexDirection: "column",
+                    ...props.actionsContainerStyle,
+                },
+            };
         }
         return props;
     },

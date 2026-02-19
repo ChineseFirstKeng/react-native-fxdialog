@@ -108,7 +108,10 @@ class FXDialog {
      * 设置背景样式
      */
     backgroundStyle(style) {
-        this._viewConfiguration.backgroundStyle = Object.assign(Object.assign({}, this._viewConfiguration.backgroundStyle), style);
+        this._viewConfiguration.backgroundStyle = {
+            ...this._viewConfiguration.backgroundStyle,
+            ...style,
+        };
         return this;
     }
     /**

@@ -87,9 +87,14 @@ class FXDialogView extends react_1.Component {
             const scrollState = this.scrollCalculation.calculateScrollState(measureContentHeight, measureActionHeight);
             this.setState((prev) => {
                 var _a, _b;
-                return (Object.assign(Object.assign({}, scrollState), { 
+                return ({
+                    ...scrollState,
                     // ✅ 测量完成后一次性替换可见内容
-                    displayContents: (_a = prev.measureContents) !== null && _a !== void 0 ? _a : prev.displayContents, measureContents: undefined, displayActions: (_b = prev.measureActions) !== null && _b !== void 0 ? _b : prev.displayActions, measureActions: undefined }));
+                    displayContents: (_a = prev.measureContents) !== null && _a !== void 0 ? _a : prev.displayContents,
+                    measureContents: undefined,
+                    displayActions: (_b = prev.measureActions) !== null && _b !== void 0 ? _b : prev.displayActions,
+                    measureActions: undefined,
+                });
             });
         };
         this.handleBackdropPress = () => {
@@ -293,7 +298,11 @@ class FXDialogView extends react_1.Component {
         }
         const updatedContents = FXDialogViewUpdateBuilder_1.FXDialogViewUpdateBuilder.buildUpdatedContents(updates.contents || [], this.state.displayContents || []);
         const updatedActions = FXDialogViewUpdateBuilder_1.FXDialogViewUpdateBuilder.buildUpdatedActions(updates.actions || [], this.state.displayActions || []);
-        const stateUpdates = Object.assign(Object.assign({}, this.state), { hasMeasuredContent: !updatedContents.changed, hasMeasuredActions: !updatedActions.changed });
+        const stateUpdates = {
+            ...this.state,
+            hasMeasuredContent: !updatedContents.changed,
+            hasMeasuredActions: !updatedActions.changed,
+        };
         if (updatedContents.changed) {
             // ✅ 不直接替换可见
             stateUpdates.measureContents = updatedContents.contents;
@@ -339,7 +348,10 @@ class FXDialogView extends react_1.Component {
         const { appendBackground } = this.state;
         // 如果是 React 元素，克隆并添加样式
         if (react_1.default.isValidElement(appendBackground)) {
-            react_native_fxview_1.logger.info("appendBackground - style", Object.assign(Object.assign({}, this.style.appendBackground), appendBackground.props.style));
+            react_native_fxview_1.logger.info("appendBackground - style", {
+                ...this.style.appendBackground,
+                ...appendBackground.props.style,
+            });
             return react_1.default.cloneElement(appendBackground, {
                 // 这里注意，是默认样式覆盖自定义样式，必须保证position: "absolute" …… 几个属性
                 style: [appendBackground.props.style, this.style.appendBackground],

@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2018",
     "module": "commonjs",
-    "lib": ["ES2017"],
+    "lib": [
+      "ES2018"
+    ],
     "jsx": "react-native",
     "declaration": true,
     "declarationMap": true,
@@ -19,12 +21,30 @@
   },
   "include": [
     "*.ts",
-    "*.tsx"
-, "dialog/FXDialog.d.ts", "dialog/FXDialog.ts", "dialog/FXDialogManager.d.ts", "dialog/FXDialogManager.ts", "dialog/FXDialogView.d.ts", "dialog/FXDialogView.tsx", "dialog/FXDialogViewController.d.ts", "dialog/FXDialogViewController.ts", "tool/FXDialogViewScrollCalculation.d.ts", "tool/FXDialogViewScrollCalculation.ts", "tool/FXDialogViewUpdateBuilder.d.ts", "tool/FXDialogViewUpdateBuilder.ts", "dialog/index.d.ts", "dialog/index.ts", "dialog/style.d.ts", "dialog/style.ts", "dialog/types.d.ts", "dialog/types.ts"  ],
+    "*.tsx",
+    "dialog/FXDialog.d.ts",
+    "dialog/FXDialog.ts",
+    "dialog/FXDialogManager.d.ts",
+    "dialog/FXDialogManager.ts",
+    "dialog/FXDialogView.d.ts",
+    "dialog/FXDialogView.tsx",
+    "dialog/FXDialogViewController.d.ts",
+    "dialog/FXDialogViewController.ts",
+    "tool/FXDialogViewScrollCalculation.d.ts",
+    "tool/FXDialogViewScrollCalculation.ts",
+    "tool/FXDialogViewUpdateBuilder.d.ts",
+    "tool/FXDialogViewUpdateBuilder.ts",
+    "dialog/index.d.ts",
+    "dialog/index.ts",
+    "dialog/style.d.ts",
+    "dialog/style.ts",
+    "dialog/types.d.ts",
+    "dialog/types.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.test.ts",
     "**/*.test.tsx"
-  ]
+  ],
 }

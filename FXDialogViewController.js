@@ -271,9 +271,13 @@ class FXDialogViewController {
         const dialogViewRef = react_1.default.createRef();
         queueItem.dialogViewRef = dialogViewRef;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        queueItem.dialogView = react_1.default.createElement(FXDialogView_1.default, Object.assign(Object.assign({}, entry.dialogProps), { ref: dialogViewRef, close: (closeType) => {
+        queueItem.dialogView = react_1.default.createElement(FXDialogView_1.default, {
+            ...entry.dialogProps,
+            ref: dialogViewRef,
+            close: (closeType) => {
                 this.close(queueItem, closeType);
-            } }));
+            },
+        });
         queueItem.controller = react_native_fxview_1.FXManager.build(queueItem.dialogView, this.fxViewId, types_1.FXDialogFXViewCategory, componentId);
         return queueItem;
     }

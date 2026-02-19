@@ -90,32 +90,41 @@ class FXDialogAnimation {
         };
         switch (this.animationType) {
             case types_1.FXDialogAnimationType.Scale:
-                return Object.assign(Object.assign({}, baseStyle), { transform: [
+                return {
+                    ...baseStyle,
+                    transform: [
                         {
                             scale: this.animatedValue.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [0.8, 1],
                             }),
                         },
-                    ] });
+                    ],
+                };
             case types_1.FXDialogAnimationType.SlideUp:
-                return Object.assign(Object.assign({}, baseStyle), { transform: [
+                return {
+                    ...baseStyle,
+                    transform: [
                         {
                             translateY: this.animatedValue.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [SCREEN_HEIGHT, 0],
                             }),
                         },
-                    ] });
+                    ],
+                };
             case types_1.FXDialogAnimationType.SlideDown:
-                return Object.assign(Object.assign({}, baseStyle), { transform: [
+                return {
+                    ...baseStyle,
+                    transform: [
                         {
                             translateY: this.animatedValue.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [-SCREEN_HEIGHT, 0],
                             }),
                         },
-                    ] });
+                    ],
+                };
             case types_1.FXDialogAnimationType.Fade:
                 return baseStyle;
             default:
