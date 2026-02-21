@@ -1,6 +1,6 @@
 import { FXManager, logger } from "react-native-fxview";
 import { FXDialogViewController } from "./FXDialogViewController";
-import { FXDialogQueueItem, FXDialogShowEntry } from "./types";
+import { FXDialogShowItem, FXDialogShowEntry } from "./types";
 
 /**
  * FXDialog 管理器
@@ -15,7 +15,7 @@ class FXDialogManager {
     return FXDialogManager.instance;
   }
 
-  show(entry: FXDialogShowEntry): FXDialogQueueItem | null {
+  show(entry: FXDialogShowEntry): FXDialogShowItem | null {
     try {
       const fxViewId = entry.fxViewId || FXManager.getLatestFXViewId();
       if (!fxViewId) {
@@ -30,7 +30,7 @@ class FXDialogManager {
     }
   }
 
-  close(param?: string | FXDialogQueueItem, closeType?: string): void {
+  close(param?: string | FXDialogShowItem, closeType?: string): void {
     try {
       if (!param || typeof param === "string") {
         const fxViewId = param || FXManager.getLatestFXViewId();

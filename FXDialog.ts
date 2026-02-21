@@ -11,7 +11,7 @@ import {
   FXDialogCloseSystemType,
   FXDialogAnimationImpl,
   FXDialogUpdateConfig,
-  FXDialogQueueItem,
+  FXDialogShowItem,
   FXDialogContent,
 } from "./types";
 import {
@@ -33,7 +33,7 @@ class FXDialog {
   protected _didShow?: () => void;
   protected _didClose?: (closeType?: FXDialogCloseType) => void;
   // 队列项 调用 show() 时生成，show 之前是 null
-  protected _queueItem: FXDialogQueueItem | null = null;
+  protected _showItem: FXDialogShowItem | null = null;
   protected _enqueue: boolean = false;
   protected _viewDefaultAnimation: FXDialogAnimation = new FXDialogAnimation(
     FXDialogAnimationType.Scale,
@@ -289,10 +289,10 @@ class FXDialog {
   protected update(updates: FXDialogUpdateConfig) {
     try {
       logger.log("Dialog update", this._fxViewId);
-      if (this._queueItem) {
+      if (this._showItem) {
         // 通过引用调用DialogView的update方法（只作用于弹窗层）
-        const dialogViewRef = this._queueItem.dialogViewRef;
-        logger.log("[Dialog] update", this._queueItem.dialogViewRef);
+        const dialogViewRef = this._showItem.dialogViewRef;
+        logger.log("[Dialog] update", this._showItem.dialogViewRef);
         if (dialogViewRef && dialogViewRef.current) {
           dialogViewRef.current.update(updates);
         } else {
@@ -386,7 +386,7 @@ class FXDialog {
         this._styleInterceptor,
         this._viewConfiguration,
       );
-      this._queueItem = FXDialogManager.getInstance().show({
+      this._showItem = FXDialogManager.getInstance().show({
         fxViewId: fxViewId,
         priority: this._priority,
         enqueue: this._enqueue,
@@ -395,13 +395,13 @@ class FXDialog {
         didClose: this._didClose,
       });
       // 关键修复：检查show操作是否成功
-      if (!this._queueItem) {
+      if (!this._showItem) {
         logger.error(
           "[Dialog] Failed to show dialog: DialogManager.show() returned null",
         );
         return null;
       }
-      this._fxViewId = this._queueItem.fxViewId;
+      this._fxViewId = this._showItem.fxViewId;
       return {
         close: this.close.bind(this),
         update: this.update.bind(this),
@@ -425,9 +425,9 @@ class FXDialog {
    */
   protected close(closeType?: FXDialogCloseType) {
     logger.log("Dialog close", this._fxViewId);
-    if (this._queueItem) {
+    if (this._showItem) {
       FXDialogManager.getInstance().close(
-        this._queueItem,
+        this._showItem,
         closeType || FXDialogCloseSystemType.Custom,
       );
     }

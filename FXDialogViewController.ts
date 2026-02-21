@@ -2,7 +2,7 @@ import React from "react";
 import { FXManager, logger } from "react-native-fxview";
 import {
   FXDialogFXViewCategory,
-  FXDialogQueueItem,
+  FXDialogShowItem,
   FXDialogShowEntry,
 } from "./types";
 import { PriorityQueue, HeapType, PriorityOrder } from "react-native-fxview";
@@ -11,8 +11,8 @@ import FXDialogView from "./FXDialogView";
 export class FXDialogViewController {
   private fxViewId: string;
 
-  private pendingQueue: PriorityQueue<FXDialogQueueItem>;
-  private currentItem: FXDialogQueueItem | null = null; // ✅ 只有一个，不需要队列
+  private pendingQueue: PriorityQueue<FXDialogShowItem>;
+  private currentItem: FXDialogShowItem | null = null; // ✅ 只有一个，不需要队列
 
   private isProcessing: boolean = false;
   private needsReevaluation: boolean = false;
@@ -20,7 +20,7 @@ export class FXDialogViewController {
   constructor(fxViewId: string) {
     this.fxViewId = fxViewId;
 
-    this.pendingQueue = new PriorityQueue<FXDialogQueueItem>(
+    this.pendingQueue = new PriorityQueue<FXDialogShowItem>(
       HeapType.MAX_HEAP,
       PriorityOrder.LIFO,
     );
@@ -29,24 +29,24 @@ export class FXDialogViewController {
   /**
    * 显示弹窗
    */
-  show(entry: FXDialogShowEntry): FXDialogQueueItem {
+  show(entry: FXDialogShowEntry): FXDialogShowItem {
     logger.log(`[DialogViewController] show`, entry);
 
-    const queueItem = this.createQueueItem(entry);
+    const showItem = this.createShowItem(entry);
 
-    if (queueItem.enqueue) {
-      this.enqueueItem(queueItem);
+    if (showItem.enqueue) {
+      this.enqueueItem(showItem);
     } else {
-      this.showImmediately(queueItem);
+      this.showImmediately(showItem);
     }
 
-    return queueItem;
+    return showItem;
   }
 
   /**
    * 不入队的处理
    */
-  private showImmediately(item: FXDialogQueueItem): void {
+  private showImmediately(item: FXDialogShowItem): void {
     logger.log(
       `[DialogViewController] showImmediately`,
       item.componentId,
@@ -90,7 +90,7 @@ export class FXDialogViewController {
   /**
    * 入队
    */
-  private enqueueItem(item: FXDialogQueueItem): void {
+  private enqueueItem(item: FXDialogShowItem): void {
     logger.log(
       `[DialogViewController] enqueue`,
       item.componentId,
@@ -193,8 +193,8 @@ export class FXDialogViewController {
    * 判断是否应该替换
    */
   private shouldReplace(
-    newItem: FXDialogQueueItem,
-    targetItem: FXDialogQueueItem,
+    newItem: FXDialogShowItem,
+    targetItem: FXDialogShowItem,
   ): boolean {
     if (newItem.priority > targetItem.priority) {
       return true;
@@ -219,7 +219,7 @@ export class FXDialogViewController {
   /**
    * 显示项
    */
-  private showItem(item: FXDialogQueueItem): Promise<void> {
+  private showItem(item: FXDialogShowItem): Promise<void> {
     logger.log(`[DialogViewController] >>> showItem start`, item.componentId);
 
     // ✅ 从 pending 移除，设为 current
@@ -248,7 +248,7 @@ export class FXDialogViewController {
   /**
    * 关闭项
    */
-  private closeItem(item: FXDialogQueueItem, closeType: string): Promise<void> {
+  private closeItem(item: FXDialogShowItem, closeType: string): Promise<void> {
     logger.log(
       `[DialogViewController] >>> closeItem start`,
       item.componentId,
@@ -296,7 +296,7 @@ export class FXDialogViewController {
   /**
    * 手动关闭
    */
-  close(item?: FXDialogQueueItem, closeType?: string): void {
+  close(item?: FXDialogShowItem, closeType?: string): void {
     const targetItem = item || this.currentItem;
 
     if (!targetItem) {
@@ -349,12 +349,12 @@ export class FXDialogViewController {
     logger.log(`[DialogViewController] clear all done`);
   }
 
-  private createQueueItem(entry: FXDialogShowEntry): FXDialogQueueItem {
+  private createShowItem(entry: FXDialogShowEntry): FXDialogShowItem {
     const componentId = `dialog_${Date.now()}_${Math.random()
       .toString(36)
       .substring(2, 9)}`;
 
-    const queueItem: FXDialogQueueItem = {
+    const showItem: FXDialogShowItem = {
       fxViewId: this.fxViewId,
       componentId,
       priority: entry.priority || 0,
@@ -367,24 +367,24 @@ export class FXDialogViewController {
     };
 
     const dialogViewRef = React.createRef<FXDialogView | null>();
-    queueItem.dialogViewRef = dialogViewRef;
+    showItem.dialogViewRef = dialogViewRef;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    queueItem.dialogView = React.createElement(FXDialogView as any, {
+    showItem.dialogView = React.createElement(FXDialogView as any, {
       ...entry.dialogProps,
       ref: dialogViewRef,
       close: (closeType?: string) => {
-        this.close(queueItem, closeType);
+        this.close(showItem, closeType);
       },
     });
 
-    queueItem.controller = FXManager.build(
-      queueItem.dialogView,
+    showItem.controller = FXManager.build(
+      showItem.dialogView,
       this.fxViewId,
       FXDialogFXViewCategory,
       componentId,
     );
 
-    return queueItem;
+    return showItem;
   }
 
   getDebugInfo(): object {

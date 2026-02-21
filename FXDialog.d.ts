@@ -1,5 +1,5 @@
 import { FXDialogViewProps } from "./FXDialogView";
-import { FXDialogAnimationType, FXDialogAction, FXDialogTitle, FXDialogMessage, FXDialogCustomContent, FXDialogCloseType, FXDialogController, FXDialogAnimationImpl, FXDialogUpdateConfig, FXDialogQueueItem, FXDialogContent } from "./types";
+import { FXDialogAnimationType, FXDialogAction, FXDialogTitle, FXDialogMessage, FXDialogCustomContent, FXDialogCloseType, FXDialogController, FXDialogAnimationImpl, FXDialogUpdateConfig, FXDialogShowItem, FXDialogContent } from "./types";
 import { FXDialogStyleInterceptor } from "./style/FXDialogStyleInterceptor";
 import { FXDialogAnimation } from "./animation/FXDialogAnimation";
 import { ViewStyle } from "react-native";
@@ -12,7 +12,7 @@ declare class FXDialog {
     protected _priority: number;
     protected _didShow?: () => void;
     protected _didClose?: (closeType?: FXDialogCloseType) => void;
-    protected _queueItem: FXDialogQueueItem | null;
+    protected _showItem: FXDialogShowItem | null;
     protected _enqueue: boolean;
     protected _viewDefaultAnimation: FXDialogAnimation;
     protected _viewConfiguration: FXDialogViewProps;

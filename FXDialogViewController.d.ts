@@ -1,4 +1,4 @@
-import { FXDialogQueueItem, FXDialogShowEntry } from "./types";
+import { FXDialogShowItem, FXDialogShowEntry } from "./types";
 export declare class FXDialogViewController {
     private fxViewId;
     private pendingQueue;
@@ -9,7 +9,7 @@ export declare class FXDialogViewController {
     /**
      * 显示弹窗
      */
-    show(entry: FXDialogShowEntry): FXDialogQueueItem;
+    show(entry: FXDialogShowEntry): FXDialogShowItem;
     /**
      * 不入队的处理
      */
@@ -42,12 +42,12 @@ export declare class FXDialogViewController {
     /**
      * 手动关闭
      */
-    close(item?: FXDialogQueueItem, closeType?: string): void;
+    close(item?: FXDialogShowItem, closeType?: string): void;
     /**
      * 清空所有项
      */
     clear(): void;
-    private createQueueItem;
+    private createShowItem;
     getDebugInfo(): object;
 }
 //# sourceMappingURL=FXDialogViewController.d.ts.map

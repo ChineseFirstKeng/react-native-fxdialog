@@ -13,21 +13,20 @@ export interface FXDialogShowEntry {
   didClose?: (closeType?: string) => void;
 }
 
-export interface FXDialogQueueItem {
+export interface FXDialogShowItem {
   fxViewId: string;
-  componentId: string;
   priority: number;
-  timestamp: number;
   enqueue: boolean;
+  dialogProps?: FXDialogViewProps;
+  didShow?: () => void;
+  didClose?: (closeType?: string) => void;
 
+  componentId: string;
+  timestamp: number;
   controller?: FXComponentController;
   animationController?: FXDialogAnimationImpl;
   dialogView?: React.ReactNode;
   dialogViewRef?: React.RefObject<FXDialogView | null>;
-
-  dialogProps?: FXDialogViewProps;
-  didShow?: () => void;
-  didClose?: (closeType?: string) => void;
 }
 
 /**

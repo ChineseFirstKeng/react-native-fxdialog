@@ -15,6 +15,10 @@ export interface FXDialogAnimationImpl {
      */
     close(): Promise<void>;
     /**
+     * 立即停止所有动画并重置状态
+     */
+    stop?(): void;
+    /**
      * 获取动画配置
      */
     getConfig(): {

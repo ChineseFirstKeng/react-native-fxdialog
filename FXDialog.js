@@ -15,7 +15,7 @@ class FXDialog {
     constructor() {
         this._priority = 0;
         // 队列项 调用 show() 时生成，show 之前是 null
-        this._queueItem = null;
+        this._showItem = null;
         this._enqueue = false;
         this._viewDefaultAnimation = new FXDialogAnimation_1.FXDialogAnimation(types_1.FXDialogAnimationType.Scale, 300, 200);
         this._viewConfiguration = {
@@ -239,10 +239,10 @@ class FXDialog {
     update(updates) {
         try {
             react_native_fxview_1.logger.log("Dialog update", this._fxViewId);
-            if (this._queueItem) {
+            if (this._showItem) {
                 // 通过引用调用DialogView的update方法（只作用于弹窗层）
-                const dialogViewRef = this._queueItem.dialogViewRef;
-                react_native_fxview_1.logger.log("[Dialog] update", this._queueItem.dialogViewRef);
+                const dialogViewRef = this._showItem.dialogViewRef;
+                react_native_fxview_1.logger.log("[Dialog] update", this._showItem.dialogViewRef);
                 if (dialogViewRef && dialogViewRef.current) {
                     dialogViewRef.current.update(updates);
                 }
@@ -325,7 +325,7 @@ class FXDialog {
                 this._viewConfiguration = this._styleInterceptor.intercept(this._viewConfiguration);
             }
             react_native_fxview_1.logger.warn("Dialog show", this._styleInterceptor, this._viewConfiguration);
-            this._queueItem = FXDialogManager_1.default.getInstance().show({
+            this._showItem = FXDialogManager_1.default.getInstance().show({
                 fxViewId: fxViewId,
                 priority: this._priority,
                 enqueue: this._enqueue,
@@ -334,11 +334,11 @@ class FXDialog {
                 didClose: this._didClose,
             });
             // 关键修复：检查show操作是否成功
-            if (!this._queueItem) {
+            if (!this._showItem) {
                 react_native_fxview_1.logger.error("[Dialog] Failed to show dialog: DialogManager.show() returned null");
                 return null;
             }
-            this._fxViewId = this._queueItem.fxViewId;
+            this._fxViewId = this._showItem.fxViewId;
             return {
                 close: this.close.bind(this),
                 update: this.update.bind(this),
@@ -361,8 +361,8 @@ class FXDialog {
      */
     close(closeType) {
         react_native_fxview_1.logger.log("Dialog close", this._fxViewId);
-        if (this._queueItem) {
-            FXDialogManager_1.default.getInstance().close(this._queueItem, closeType || types_1.FXDialogCloseSystemType.Custom);
+        if (this._showItem) {
+            FXDialogManager_1.default.getInstance().close(this._showItem, closeType || types_1.FXDialogCloseSystemType.Custom);
         }
     }
     /**

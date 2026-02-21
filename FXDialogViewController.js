@@ -22,14 +22,14 @@ class FXDialogViewController {
      */
     show(entry) {
         react_native_fxview_1.logger.log(`[DialogViewController] show`, entry);
-        const queueItem = this.createQueueItem(entry);
-        if (queueItem.enqueue) {
-            this.enqueueItem(queueItem);
+        const showItem = this.createShowItem(entry);
+        if (showItem.enqueue) {
+            this.enqueueItem(showItem);
         }
         else {
-            this.showImmediately(queueItem);
+            this.showImmediately(showItem);
         }
-        return queueItem;
+        return showItem;
     }
     /**
      * 不入队的处理
@@ -252,12 +252,12 @@ class FXDialogViewController {
         this.currentItem = null;
         react_native_fxview_1.logger.log(`[DialogViewController] clear all done`);
     }
-    createQueueItem(entry) {
+    createShowItem(entry) {
         var _a;
         const componentId = `dialog_${Date.now()}_${Math.random()
             .toString(36)
             .substring(2, 9)}`;
-        const queueItem = {
+        const showItem = {
             fxViewId: this.fxViewId,
             componentId,
             priority: entry.priority || 0,
@@ -269,17 +269,17 @@ class FXDialogViewController {
             animationController: (_a = entry.dialogProps) === null || _a === void 0 ? void 0 : _a.animator,
         };
         const dialogViewRef = react_1.default.createRef();
-        queueItem.dialogViewRef = dialogViewRef;
+        showItem.dialogViewRef = dialogViewRef;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        queueItem.dialogView = react_1.default.createElement(FXDialogView_1.default, {
+        showItem.dialogView = react_1.default.createElement(FXDialogView_1.default, {
             ...entry.dialogProps,
             ref: dialogViewRef,
             close: (closeType) => {
-                this.close(queueItem, closeType);
+                this.close(showItem, closeType);
             },
         });
-        queueItem.controller = react_native_fxview_1.FXManager.build(queueItem.dialogView, this.fxViewId, types_1.FXDialogFXViewCategory, componentId);
-        return queueItem;
+        showItem.controller = react_native_fxview_1.FXManager.build(showItem.dialogView, this.fxViewId, types_1.FXDialogFXViewCategory, componentId);
+        return showItem;
     }
     getDebugInfo() {
         var _a, _b, _c;
