@@ -1,6 +1,6 @@
 import type React from "react";
 import { ViewStyle, TextStyle } from "react-native";
-import { FXAnimationImpl } from "./animation/FXAnimation";
+import { FXDialogAnimationImpl } from "./animation/FXDialogAnimationImpl";
 import FXDialogView, { FXDialogViewProps } from "./FXDialogView";
 import { FXComponentController } from "react-native-fxview";
 
@@ -21,7 +21,7 @@ export interface FXDialogQueueItem {
   enqueue: boolean;
 
   controller?: FXComponentController;
-  animationController?: FXAnimationImpl;
+  animationController?: FXDialogAnimationImpl;
   dialogView?: React.ReactNode;
   dialogViewRef?: React.RefObject<FXDialogView | null>;
 
@@ -111,17 +111,6 @@ export enum FXDialogAnimationType {
   SlideUp = "slideUp",
   /** 从上向下滑动 */
   SlideDown = "slideDown",
-}
-
-/**
- * 弹窗动画实现接口
- * 继承基础动画接口，提供背景和容器的样式控制
- */
-export interface FXDialogAnimationImpl extends FXAnimationImpl {
-  /** 获取背景蒙层的动画样式 */
-  backgroundStyle: () => ViewStyle;
-  /** 获取弹窗容器的动画样式 */
-  containerStyle: () => ViewStyle;
 }
 
 export type FXDialogContent =
@@ -362,3 +351,5 @@ export interface FXDialogController {
   updateActionsContainerStyle: (update: ViewStyle) => void;
   fxViewId: () => string | undefined;
 }
+
+export type { FXDialogAnimationImpl } from "./animation/FXDialogAnimationImpl";

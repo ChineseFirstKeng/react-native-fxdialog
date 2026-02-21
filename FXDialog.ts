@@ -18,7 +18,7 @@ import {
   FXDialogStyleInterceptor,
   FXDialogStyleInterceptorSystem,
 } from "./style/FXDialogStyleInterceptor";
-import DialogManager from "./FXDialogManager";
+import FXDialogManager from "./FXDialogManager";
 import { FXDialogAnimation } from "./animation/FXDialogAnimation";
 import { ViewStyle } from "react-native";
 import { logger } from "react-native-fxview";
@@ -386,7 +386,7 @@ class FXDialog {
         this._styleInterceptor,
         this._viewConfiguration,
       );
-      this._queueItem = DialogManager.getInstance().show({
+      this._queueItem = FXDialogManager.getInstance().show({
         fxViewId: fxViewId,
         priority: this._priority,
         enqueue: this._enqueue,
@@ -426,7 +426,7 @@ class FXDialog {
   protected close(closeType?: FXDialogCloseType) {
     logger.log("Dialog close", this._fxViewId);
     if (this._queueItem) {
-      DialogManager.getInstance().close(
+      FXDialogManager.getInstance().close(
         this._queueItem,
         closeType || FXDialogCloseSystemType.Custom,
       );
@@ -434,13 +434,13 @@ class FXDialog {
   }
 
   /**
-   * 静态函数关闭弹窗，关闭的是最近展示出来的那个。触发关闭弹窗，并不是关闭完成。转发给 DialogManager
+   * 静态函数关闭弹窗，关闭的是最近展示出来的那个。触发关闭弹窗，并不是关闭完成。转发给 FXDialogManager
    * @param fxViewId 可选，指定要关闭的弹窗的 fxViewId
    */
   static close(fxViewId?: string, closeType?: FXDialogCloseType) {
     try {
       logger.log("Dialog static close", fxViewId);
-      DialogManager.getInstance().close(
+      FXDialogManager.getInstance().close(
         fxViewId,
         closeType || FXDialogCloseSystemType.Custom,
       );
@@ -454,7 +454,7 @@ class FXDialog {
    */
   static clearAll(fxViewId: string) {
     logger.log("Dialog clearAll");
-    DialogManager.getInstance().clearViewController(fxViewId);
+    FXDialogManager.getInstance().clearViewController(fxViewId);
   }
 }
 

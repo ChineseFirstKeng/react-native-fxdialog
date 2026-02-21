@@ -81,7 +81,6 @@ const NeonDialogStyleInterceptor: FXDialogStyleInterceptor = {
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.8,
               shadowRadius: 10,
-              elevation: 10,
               ...action.containerStyle,
             },
           } as FXDialogDefaultAction;

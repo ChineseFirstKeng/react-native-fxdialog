@@ -366,7 +366,7 @@ class FXDialog {
         }
     }
     /**
-     * 静态函数关闭弹窗，关闭的是最近展示出来的那个。触发关闭弹窗，并不是关闭完成。转发给 DialogManager
+     * 静态函数关闭弹窗，关闭的是最近展示出来的那个。触发关闭弹窗，并不是关闭完成。转发给 FXDialogManager
      * @param fxViewId 可选，指定要关闭的弹窗的 fxViewId
      */
     static close(fxViewId, closeType) {

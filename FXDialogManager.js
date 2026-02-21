@@ -3,17 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_native_fxview_1 = require("react-native-fxview");
 const FXDialogViewController_1 = require("./FXDialogViewController");
 /**
- * Dialog 管理器
+ * FXDialog 管理器
  */
-class DialogManager {
+class FXDialogManager {
     constructor() {
         this.viewControllerMap = new Map();
     }
     static getInstance() {
-        if (!DialogManager.instance) {
-            DialogManager.instance = new DialogManager();
+        if (!FXDialogManager.instance) {
+            FXDialogManager.instance = new FXDialogManager();
         }
-        return DialogManager.instance;
+        return FXDialogManager.instance;
     }
     show(entry) {
         try {
@@ -83,4 +83,4 @@ class DialogManager {
         return viewController;
     }
 }
-exports.default = DialogManager;
+exports.default = FXDialogManager;

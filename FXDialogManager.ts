@@ -3,16 +3,16 @@ import { FXDialogViewController } from "./FXDialogViewController";
 import { FXDialogQueueItem, FXDialogShowEntry } from "./types";
 
 /**
- * Dialog 管理器
+ * FXDialog 管理器
  */
-class DialogManager {
-  private static instance: DialogManager;
+class FXDialogManager {
+  private static instance: FXDialogManager;
   private viewControllerMap: Map<string, FXDialogViewController> = new Map();
-  static getInstance(): DialogManager {
-    if (!DialogManager.instance) {
-      DialogManager.instance = new DialogManager();
+  static getInstance(): FXDialogManager {
+    if (!FXDialogManager.instance) {
+      FXDialogManager.instance = new FXDialogManager();
     }
-    return DialogManager.instance;
+    return FXDialogManager.instance;
   }
 
   show(entry: FXDialogShowEntry): FXDialogQueueItem | null {
@@ -92,4 +92,4 @@ class DialogManager {
   }
 }
 
-export default DialogManager;
+export default FXDialogManager;
