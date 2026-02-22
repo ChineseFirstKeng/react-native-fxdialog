@@ -619,7 +619,7 @@ export default class FXDialogView extends Component<
     // ✅ 隐藏测量层：只在 measureElements 存在时渲染
     const measureLayer =
       measureContents || measureActions ? (
-        <View style={{ position: "absolute", opacity: 0, top: 9999 }}>
+        <View style={{ position: "absolute", opacity: 0 }}>
           {this.renderAllArea(measureContents || [], measureActions || [])}
         </View>
       ) : null;

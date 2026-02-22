@@ -395,7 +395,7 @@ class FXDialogView extends react_1.Component {
         // ✅ 可见层：始终展示旧内容
         const displayLayer = this.renderAllArea(displayContents || [], displayActions || []);
         // ✅ 隐藏测量层：只在 measureElements 存在时渲染
-        const measureLayer = measureContents || measureActions ? (<react_native_1.View style={{ position: "absolute", opacity: 0, top: 9999 }}>
+        const measureLayer = measureContents || measureActions ? (<react_native_1.View style={{ position: "absolute", opacity: 0 }}>
           {this.renderAllArea(measureContents || [], measureActions || [])}
         </react_native_1.View>) : null;
         return (<react_native_1.Animated.View style={overlayStyles}>
